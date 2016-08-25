@@ -1,8 +1,7 @@
 exports.slider = ->
-	console.log 'creating alans slider'
 	widget = new Layer
 		height: 650
-		width: 150
+		width: 750
 		#backgroundColor: "rgba(255,255,255,0.5)"
 
 	graph = new Layer
@@ -36,6 +35,7 @@ exports.slider = ->
 		backgroundColor: "rgba(48,31,255,0.8)"
 
 	priceBar = new Layer
+		parent: widget
 		width: 545
 		height: 54
 		y: 580

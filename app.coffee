@@ -165,10 +165,20 @@ showDealBadges = =>
 # ----------- right rail
 
 
-slider = require("slide").slider()
-slider.style =
-	border: '1px solid red'
 
+# layerA = new Layer
+# 	children: require("slide").slider()
+# 	z:200
+# 	width: 100
+# 	height: 100
+layerA = new Layer
+	width: 737
+	height: 640
+	x: 459
+	scale: 0.44
+	y: 116
+layerA.addChild(require("slide").slider())
+# layerA.style = width: '400px'
 # slider.on 'change:value', (event, layer) ->
 #   console.log 'changing'
 #   showDealBadges()
@@ -189,3 +199,5 @@ analyzeBad = new Layer
 #   analyzeBad.style.display = 'block'
 # else
 #   analyzeGood.style.display = 'block'
+
+
