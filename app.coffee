@@ -1,7 +1,9 @@
 document.body.style.cursor = "auto"
-flipCard = require "flipCard"
 Screen.backgroundColor = "#fff"
-budget = 'bad'; budget = 'good'
+budget = 'bad'
+budget = 'good'
+flipCard = require "flipCard"
+
 
 # as a user
 # when i manipulate price slider
@@ -22,8 +24,9 @@ nav = new Layer
 result_div = new Layer
   width: 1034
   height:727
-  y: 120
+  y: 120 + 20
   backgroundColor: "rgba(255,255,255,1)"
+  x: 80
 
 result_div.scroll = true
 
@@ -35,15 +38,24 @@ for i in [0..9]
   opts =
     width: 555
     height: 218
-    y: (50+(i*218))
-    x: 80
+    y: (10+(i*218))
+    x: 0
     parent: result_div
-  back_of_result_div = new Layer(
-    Object.assign({
-      html: 'back of card'
-      backgroundColor: "black"
-    }, opts)
-  )
+  if i == 1
+    back_of_result_div = new Layer(
+      Object.assign({
+        image: "images/Screen Shot 2016-08-25 at 12.40.21 PM.png"
+        rotationY: 180
+      }, opts)
+    )
+  else
+    back_of_result_div = new Layer(
+      Object.assign({
+        image: "images/Screen Shot 2016-08-25 at 12.35.56 PM.png"
+        rotationY: 180
+      }, opts)
+    )
+
   result_img = new Layer(
     Object.assign({
       image: "images/Screen Shot 2016-08-24 at 10.17.43 AM.png"
@@ -55,19 +67,30 @@ for i in [0..9]
 for result, i in srp_results
   front = result
   back = back_results[i]
-#   flipCard.flipCard(front, back, 1600, "spring(300,20,0)")
-  result.onSwipeLeft (event, layer) ->
-    layer.animate
-        properties:
-          x: -600
-        curve: "ease"
-      layer.onAnimationEnd (event, layer) ->
-        next_results = srp_results.slice(layer.index)
-        for r in next_results
-          r.animate
-            properties:
-              y: r.y - r.height
-            curve: "ease"
+
+  if front and back
+    flipCard.flipCard(front, back, 1600, "spring(300,20,20)", result_div)
+#     front.onSwipeLeft (event, layer) ->
+#       back.destroy()
+#       back.superLayer.destroy()
+#       layer.animate
+#         properties:
+#             x: -600
+#           curve: "ease"
+#        layer.onAnimationEnd (event, layer) ->
+#          next_results = srp_results.slice(layer.index)
+#          for r in next_results
+#            r.animate
+#              properties:
+#                y: r.y - r.height
+#                curve: "ease"
+#
+# analyzeGood = new Layer
+#   width: 371
+#   height: 109
+#   image: "images/Screen Shot 2016-08-24 at 2.50.28 PM.png"
+#   parent: back_results[0]
+#   rotationY: 180
 
 green = new Layer
   width: 20
@@ -140,17 +163,15 @@ showDealBadges = =>
       display: 'block'
 
 # ----------- right rail
-slider = new SliderComponent
-    min: 0
-    max: 1
-    value: 0.5
-    knobSize: 30
-    x: 665
-    y: 300
 
-slider.on 'change:value', (event, layer) ->
-  console.log 'changing'
-  showDealBadges()
+
+slider = require("slide").slider()
+slider.style =
+	border: '1px solid red'
+
+# slider.on 'change:value', (event, layer) ->
+#   console.log 'changing'
+#   showDealBadges()
 
 
 # slider.center()
@@ -161,17 +182,10 @@ analyzeBad = new Layer
   x: 665
   y: 165
 
-analyzeGood = new Layer
-  width: 371
-  height: 109
-  image: "images/Screen Shot 2016-08-24 at 2.50.28 PM.png"
-  x: 647
-  y: 170
-
-analyzeGood.style.display = 'none'
-analyzeBad.style.display = 'none'
-
-if budget == 'bad'
-  analyzeBad.style.display = 'block'
-else
-  analyzeGood.style.display = 'block'
+# analyzeGood.style.display = 'none'
+# analyzeBad.style.display = 'none'
+#
+# if budget == 'bad'
+#   analyzeBad.style.display = 'block'
+# else
+#   analyzeGood.style.display = 'block'
