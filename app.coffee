@@ -1,9 +1,7 @@
 document.body.style.cursor = "auto"
 Screen.backgroundColor = "#fff"
-budget = 'bad'
-budget = 'good'
-flipCard = require "flipCard"
 
+flipCard = require "flipCard"
 
 # as a user
 # when i manipulate price slider
@@ -69,7 +67,7 @@ for result, i in srp_results
   back = back_results[i]
 
   if front and back
-    flipCard.flipCard(front, back, 1600, "spring(300,20,20)", result_div)
+    flipCard.flipCard(front, back, 900, "spring(100,10,10)", result_div)
 #     front.onSwipeLeft (event, layer) ->
 #       back.destroy()
 #       back.superLayer.destroy()
@@ -85,12 +83,6 @@ for result, i in srp_results
 #                y: r.y - r.height
 #                curve: "ease"
 #
-# analyzeGood = new Layer
-#   width: 371
-#   height: 109
-#   image: "images/Screen Shot 2016-08-24 at 2.50.28 PM.png"
-#   parent: back_results[0]
-#   rotationY: 180
 
 green = new Layer
   width: 20
@@ -176,28 +168,41 @@ layerA = new Layer
 	height: 640
 	x: 459
 	scale: 0.44
-	y: 116
-layerA.addChild(require("slide").slider())
-# layerA.style = width: '400px'
+	y: -29
+slider = require("slide").slider()
+layerA.addChild(slider[0])
+min = slider[1]
+max = slider[2]
+
+
+# layerA.style = width: '400px'i
 # slider.on 'change:value', (event, layer) ->
 #   console.log 'changing'
-#   showDealBadges()
 
 
 # slider.center()
-analyzeBad = new Layer
-  width: 366
-  height: 100
-  image: "images/Screen Shot 2016-08-24 at 2.27.15 PM.png"
+analyzeGood = new Layer
+  width: 371
+  height: 109
+  image: "images/Screen Shot 2016-08-24 at 2.50.28 PM.png"
   x: 665
-  y: 165
+  y: 446
+#   rotationY: 180
+
+# analyzeBad = new Layer
+#   width: 366
+#   height: 100
+#   image: "images/Screen Shot 2016-08-24 at 2.27.15 PM.png"
+#   x: 665
+#   y: 165
+analyzeGood.style.display = 'none'
+
+max.onDragEnd ->
+  showDealBadges()
+  analyzeGood.style.display = 'block'
+min.onDragEnd ->
+  showDealBadges()
+  analyzeGood.style.display = 'block'
 
 # analyzeGood.style.display = 'none'
 # analyzeBad.style.display = 'none'
-#
-# if budget == 'bad'
-#   analyzeBad.style.display = 'block'
-# else
-#   analyzeGood.style.display = 'block'
-
-
