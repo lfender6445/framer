@@ -2,22 +2,13 @@ document.body.style.cursor = "auto"
 Screen.backgroundColor = "#fff"
 
 flipCard = require "flipCard"
-
-# as a user
-# when i manipulate price slider
-# i can see deal text appear on the listings
-
-# as a user
-# when i click on the deal test
-# i can analyze costs
-
 # -------------------- menu
-nav = new Layer
-  width: 1034
-  height: 130
-  image: "images/Screen Shot 2016-08-24 at 10.14.42 AM.png"
-  x: -8
-  y: -1
+# nav = new Layer
+#   width: 1034
+#   height: 130
+#   image: "images/Screen Shot 2016-08-24 at 10.14.42 AM.png"
+#   x: -8
+#   y: -1
 
 result_div = new Layer
   width: 1034
@@ -62,27 +53,28 @@ for i in [0..9]
   srp_results.push  result_img
   back_results.push back_of_result_div
 
+cards = []
 for result, i in srp_results
   front = result
   back = back_results[i]
 
   if front and back
-    flipCard.flipCard(front, back, 900, "spring(100,10,10)", result_div)
-#     front.onSwipeLeft (event, layer) ->
-#       back.destroy()
-#       back.superLayer.destroy()
-#       layer.animate
-#         properties:
-#             x: -600
-#           curve: "ease"
-#        layer.onAnimationEnd (event, layer) ->
-#          next_results = srp_results.slice(layer.index)
-#          for r in next_results
-#            r.animate
-#              properties:
-#                y: r.y - r.height
-#                curve: "ease"
-#
+    card = flipCard.flipCard(front, back, 900, "spring(100,10,10)", result_div)
+    cards.push card
+    card.onSwipeLeft (event, layer) ->
+      layer.animate
+        properties:
+          x: -600
+          curve: "ease"
+       layer.onAnimationEnd (event, layer) ->
+       	 cards = cards.slice(1)
+         for r, i in cards
+           console.log r
+           r.animate
+             properties:
+               y: r.y - (r.height)
+               curve: "ease"
+         layer.destroy()
 
 green = new Layer
   width: 20
@@ -159,16 +151,16 @@ showDealBadges = =>
 
 
 # layerA = new Layer
-# 	children: require("slide").slider()
-# 	z:200
-# 	width: 100
-# 	height: 100
+#   children: require("slide").slider()
+#   z:200
+#   width: 100
+#   height: 100
 layerA = new Layer
-	width: 737
-	height: 640
-	x: 459
-	scale: 0.44
-	y: -29
+  width: 737
+  height: 640
+  x: 459
+  scale: 0.44
+  y: -29
 slider = require("slide").slider()
 layerA.addChild(slider[0])
 min = slider[1]
@@ -206,3 +198,4 @@ min.onDragEnd ->
 
 # analyzeGood.style.display = 'none'
 # analyzeBad.style.display = 'none'
+
